@@ -153,6 +153,7 @@ static void swdDataPP( void )
     digitalWrite(SWDIO_PIN,LOW);
 	//GPIO_SWDIO->MODER |= (0x01u << (PIN_SWDIO << 1u));
 	pinMode(SWDIO_PIN,OUTPUT);
+	//pinMode(SWDIO_PIN,OUTPUT_OPEN_DRAIN);
     //pinMode(SWDIO_PIN,INPUT_PULLUP);
     MWAIT;
 
@@ -188,7 +189,8 @@ static void swdDataRead( uint8_t * const data, uint8_t const len )
 		cdata >>= 1u;
 		//cdata |= (GPIO_SWDIO->IDR & (0x01u << (PIN_SWDIO))) ? 0x80u : 0x00u;
         cdata |= digitalRead(SWDIO_PIN) ? 0x80u :0x00u;
-        //Serial.print(cdata,HEX);Serial.print(" ");
+       // Serial.print(cdata,HEX);
+		//Serial.print(",");
 		data[(((len + 7u) >> 3u) - (i >> 3u)) - 1u] = cdata;
 
 		//GPIO_SWCLK->BSRR = (0x01u << (PIN_SWCLK + BSRR_SET));

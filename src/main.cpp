@@ -3,6 +3,7 @@
 #include <swd.h>
 #include <uart.h>
 #include <target.h>
+#include <clk.h>
 
 /**
  * 
@@ -79,7 +80,7 @@ static swdStatus_t extractFlashData( uint32_t const address, uint32_t * const da
 			*data = extractedData;
 			++(extractionStatistics.numSuccess);
 		//	GPIO_LED_GREEN->ODR |= (0x01u << PIN_LED_GREEN);
-      digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN));
+      		digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN));
 		}
 		else
 		{
@@ -134,6 +135,7 @@ void setup() {
 uartInit();
 targetSysCtrlInit();
 swdCtrlInit();
+//clkEnableSystick();
 pinMode(BUTTON_GPIO,INPUT_PULLUP);
 pinMode(LED_BUILTIN,OUTPUT);
 digitalWrite(LED_BUILTIN,LOW);
@@ -161,9 +163,10 @@ delay(100);
 void loop() {
   
 	uartControl.transmitHex = 1u;
-	uartControl.transmitLittleEndian = 1u;
+	uartControl.transmitLittleEndian = 0u;
 	uartControl.readoutAddress = 0x00000000u;
-	uartControl.readoutLen = (64u * 1024u);
+	//uartControl.readoutLen = (64u * 1024u);
+	uartControl.readoutLen = (2u * 1024u);
 	uartControl.active = 0u;
 
 

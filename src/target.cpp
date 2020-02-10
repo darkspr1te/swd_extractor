@@ -23,8 +23,8 @@ void targetSysCtrlInit( void )
 #endif
     pinMode(POWER_PIN,OUTPUT);
     pinMode(RESET_PIN,OUTPUT);
-    targetSysOn();
-	targetSysUnReset();
+    //targetSysOn();
+	//targetSysUnReset();
     delay(100);
 	targetSysOff();
 	targetSysReset();
@@ -35,7 +35,6 @@ void targetSysCtrlInit( void )
 void targetSysReset( void )
 {
 	//GPIO_RESET->BSRR = (0x01u << (PIN_RESET + GPIO_PIN_RESET));
-  //  HAL_GPIO_WritePin(GPIO_RESET,PIN_RESET,GPIO_PIN_RESET);
     digitalWrite(RESET_PIN,LOW);
 	return ;
 }
@@ -43,7 +42,6 @@ void targetSysReset( void )
 void targetSysUnReset( void )
 {
 	//GPIO_RESET->BSRR = (0x01u << (PIN_RESET + GPIO_PIN_SET));
-   // HAL_GPIO_WritePin(GPIO_RESET,PIN_RESET,GPIO_PIN_SET);
     digitalWrite(RESET_PIN,HIGH);
 	return ;
 }
@@ -52,7 +50,6 @@ void targetSysUnReset( void )
 void targetSysOff( void )
 {
 	//GPIO_POWER->BSRR = (0x01u << (PIN_POWER + GPIO_PIN_RESET));
-   // HAL_GPIO_WritePin(GPIO_POWER,PIN_POWER,GPIO_PIN_RESET);
     digitalWrite(POWER_PIN,LOW);
 	return ;
 }
@@ -60,7 +57,6 @@ void targetSysOff( void )
 void targetSysOn( void )
 {
 	//GPIO_POWER->BSRR = (0x01u << (PIN_POWER + GPIO_PIN_SET));
-   // HAL_GPIO_WritePin(GPIO_POWER,PIN_POWER,GPIO_PIN_SET);
     digitalWrite(POWER_PIN,HIGH);
 	return ;
 }
