@@ -24,6 +24,7 @@
 #define SWDIO_PIN PB3
 #define SWCLK_PIN PB4
 
+#define UNUSED_EXPERIMENTAL
 /* Internal SWD status. There exist combined SWD status values (e.g. 0x60), since subsequent command replys are OR'ed. Thus there exist cases where the previous command executed correctly (returned 0x20) and the following command failed (returned 0x40), resulting in 0x60. */
 typedef enum {
 	// TODO: 0xA0 fehlt.
@@ -57,5 +58,6 @@ swdStatus_t swdReadAHBAddr( uint32_t const addr, uint32_t * const data );
 swdStatus_t swdInit( uint32_t * const idcode );
 swdStatus_t swdSetAP32BitMode( uint32_t * const data );
 swdStatus_t swdSelectAHBAP( void );
+
 
 #endif

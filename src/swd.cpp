@@ -426,7 +426,6 @@ swdStatus_t swdSelectAPnBank(uint8_t const ap, uint8_t const bank)
 	//ret |= (swdStatus_t)swdWritePacket(swdPortSelectDP, 0x02u, data);
     ret_8|= swdWritePacket(swdPortSelectDP, 0x02u, data);
     ret =(swdStatus_t)ret_8;
-    //ret |=ret;
 	return ret;
 }
 
@@ -434,9 +433,9 @@ swdStatus_t swdSelectAPnBank(uint8_t const ap, uint8_t const bank)
 static swdStatus_t swdReadAP0( uint32_t * const data )
 {
 	swdStatus_t ret = swdStatusNone;
-
-	swdReadPacket(swdPortSelectAP, 0x00u, data);
-
+	uint8_t ret_8 =0;
+	ret_8=swdReadPacket(swdPortSelectAP, 0x00u, data);
+	ret=(swdStatus_t)ret_8;
 	return ret;
 }
 
@@ -518,15 +517,20 @@ swdStatus_t swdInit( uint32_t * const idcode )
 	return ret;
 }
 
+/**
+ * Below not implemented within main.c 
+ */
+
+
 
 #ifdef UNUSED_EXPERIMENTAL
 static swdStatus_t swdReadDPCtrl( uint32_t * const data )
 {
 	swdStatus_t ret = swdStatusNone;
-
-	ret |= swdSelectAPnBank(0x00u, 0x00u);
-	ret |= swdReadPacket(swdPortSelectAP, 0x01u, data);
-
+	uint8_t ret_8 =0;
+	ret_8 |= swdSelectAPnBank(0x00u, 0x00u);
+	ret_8 |= swdReadPacket(swdPortSelectAP, 0x01u, data);
+	ret=(swdStatus_t)	ret_8;
 	return ret;
 }
 
@@ -534,9 +538,9 @@ static swdStatus_t swdReadDPCtrl( uint32_t * const data )
 static swdStatus_t swdReadAPCtrl( uint32_t * const data )
 {
 	swdStatus_t ret = swdStatusNone;
-
-	ret |= swdReadPacket(swdPortSelectDP, 0x01u, data);
-
+	uint8_t ret_8 =0;
+	ret_8 |= swdReadPacket(swdPortSelectDP, 0x01u, data);
+	ret=(swdStatus_t)	ret_8;
 	return ret;
 }
 
@@ -544,11 +548,13 @@ static swdStatus_t swdReadAPCtrl( uint32_t * const data )
 static swdStatus_t swdReadWIREMODE( uint32_t * const data )
 {
 	swdStatus_t ret = swdStatusNone;
-
-	ret |= swdWritePacket(swdPortSelectDP, 0x02u, 0x00000001u);
-	ret |= swdReadPacket(swdPortSelectDP, 0x01u, data);
-
-	return data;
+	uint8_t ret_8 =0;
+	uint32_t ret_32=0;
+	ret_8 |= swdWritePacket(swdPortSelectDP, 0x02u, 0x00000001u);
+	ret_8 |= swdReadPacket(swdPortSelectDP, 0x01u, data);
+	ret_32 = *data;
+	ret=(swdStatus_t)ret_32;
+	return ret;
 }
 
 
@@ -563,10 +569,10 @@ static swdStatus_t swdReadDHCSR( uint32_t * const data )
 static swdStatus_t swdWriteAHBAddr( uint32_t const addr, uint32_t const data )
 {
 	swdStatus_t ret = swdStatusNone;
-
-	ret |= swdWritePacket(swdPortSelectAP, 0x01u, addr);
-	ret |= swdWritePacket(swdPortSelectAP, 0x03u, data);
-
+	uint8_t ret_8 =0;
+	ret_8 |= swdWritePacket(swdPortSelectAP, 0x01u, addr);
+	ret_8 |= swdWritePacket(swdPortSelectAP, 0x03u, data);
+	ret=(swdStatus_t)ret_8;
 	return ret;
 }
 
@@ -574,9 +580,9 @@ static swdStatus_t swdWriteAHBAddr( uint32_t const addr, uint32_t const data )
 static swdStatus_t swdCoreHalt( void )
 {
 	swdStatus_t ret = swdStatusNone;
-
-	ret |= swdWriteAHBAddr(0xE000EDF0u, 0xA05F0003u);
-
+	uint8_t ret_8 =0;
+	ret_8 |= swdWriteAHBAddr(0xE000EDF0u, 0xA05F0003u);
+	ret=(swdStatus_t)ret_8;
 	return ret;
 }
 
